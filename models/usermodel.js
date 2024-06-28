@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require ('bcrypt');
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,6 +21,28 @@ const userSchema = new mongoose.Schema(
     phone: String,
     profileImg: String,
 
+    image : String ,
+    
+    gender: {
+      type: String,
+      trim: true,
+      required: [true, 'gender required'],
+    },
+    weight: {
+      type: Number,
+      trim: true,
+      required: [true, 'weight required'],
+    },
+    height: {
+      type: Number,
+      trim: true,
+      required: [true, 'height required'],
+    },
+    old: {
+      type: Number,
+      trim: true,
+      required: [true, 'old required'],
+    },
     password: {
       type: String,
       required: [true, 'password required'],
@@ -46,16 +68,16 @@ const userSchema = new mongoose.Schema(
         ref: 'Product',
       },
     ],
-    addresses: [
-      {
-        id: { type: mongoose.Schema.Types.ObjectId },
-        alias: String,
-        details: String,
-        phone: String,
-        city: String,
-        postalCode: String,
-      },
-    ],
+    // addresses: [
+    //   {
+    //     id: { type: mongoose.Schema.Types.ObjectId },
+    //     alias: String,
+    //     details: String,
+    //     phone: String,
+    //     city: String,
+    //     postalCode: String,
+    //   },
+    // ],
   },
   { timestamps: true }
 );

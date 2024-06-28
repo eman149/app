@@ -43,6 +43,23 @@ exports.signupValidator = [
     .notEmpty()
     .withMessage('Password confirmation required'),
 
+  
+    check('height')
+    .notEmpty()
+    .withMessage(' required'),
+
+ check('weight')
+    .notEmpty()
+    .withMessage(' required'),
+    
+  check('gender')
+    .notEmpty()
+    .withMessage(' required'),
+  
+  check('old')
+    .notEmpty()
+    .withMessage(' required'),
+
   validatorMiddleware,
 ];
 

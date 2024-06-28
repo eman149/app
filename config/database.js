@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const dbConnection = () => {
   mongoose
-  .connect("mongodb+srv://eman:F4R1uCJPl8Je4PsY@atlascluster.c2m65lc.mongodb.net/")
+  .connect(process.env.DB_URL)
     .then((conn) => {
       console.log(`Database Connected: ${conn.connection.host}`);
     })

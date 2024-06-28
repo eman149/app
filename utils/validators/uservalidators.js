@@ -4,6 +4,9 @@ const { check, body } = require('express-validator');
 const validatorMiddleware = require('../../middlewares/validatormiddleware');
 const User = require('../../models/usermodel');
 
+const validatorMiddleware1 = require('../../middlewares/validatormiddleware');
+
+
 exports.createUserValidator = [
   check('name')
     .notEmpty()
@@ -54,6 +57,22 @@ exports.createUserValidator = [
   check('profileImg').optional(),
   check('role').optional(),
 
+  check('height')
+    .notEmpty()
+    .withMessage(' required'),
+
+ check('weight')
+    .notEmpty()
+    .withMessage(' required'),
+
+  check('gender')
+    .notEmpty()
+    .withMessage(' required'),
+
+  check('old')
+    .notEmpty()
+    .withMessage(' required'),
+
   validatorMiddleware,
 ];
 
@@ -74,8 +93,9 @@ exports.updateUserValidator = [
       return true;
     }),
   check('email')
-    .notEmpty()
-    .withMessage('Email required')
+    //.notEmpty()
+   //.withMessage('Email required')
+   .optional()
     .isEmail()
     .withMessage('Invalid email address')
     .custom((val) =>
@@ -92,6 +112,9 @@ exports.updateUserValidator = [
 
   check('profileImg').optional(),
   check('role').optional(),
+  check('height').optional(),
+  check('weight').optional(),
+  check('gender').optional(),
   validatorMiddleware,
 ];
 
@@ -133,6 +156,9 @@ exports.deleteUserValidator = [
   check('id').isMongoId().withMessage('Invalid User id format'),
   validatorMiddleware,
 ];
+
+
+
 
 // exports.updateLoggedUserValidator = [
 //   body('name')

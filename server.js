@@ -1,8 +1,8 @@
 const express = require ('express');
 const morgan = require('morgan');
-const dotenv = require('dotenv')
-dotenv.config({ path: 'config.env' });
-const globalerror = require ('./middlewares/errormiddleware.js')
+const dotenv = require('dotenv') ;
+dotenv.config({ path: 'config1.env' });
+const globalerror = require ('./middlewares/errormiddleware.js');
 const apierror = require('./utils/apierror') ;
 const dbConnection = require('./config/database');
 const { default: mongoose } = require('mongoose');
@@ -11,7 +11,7 @@ const userroute  = require ('./routes/userroute.js') ;
 const authroute  = require ('./routes/authroute.js') ;
 
 
-
+ 
 
 // Connect with db
 dbConnection();
@@ -54,7 +54,33 @@ const searchFood = async (foodName) => {
 };
 
 
+// //////////  cloudphoto 
+// const cloudinary = require('./cloudinary.config.js');
 
+// const filePath = './uploads/users'; // Replace with the actual path
+
+// cloudinary.uploader.upload(filePath, (error, result) => {
+//   if (error) {
+//     console.error(error);
+//   } else {
+//     console.log('Image uploaded successfully:', result.url);
+//   }
+// });
+
+
+
+
+////////.env
+if (process.env.NODE_ENV === 'development') {
+  console.log('Running in development mode');
+  // Enable debugging, logging, etc.
+} else if (process.env.NODE_ENV === 'production') {
+  console.log('Running in production mode');
+  // Optimize code, disable debugging, etc.
+} else {
+  console.log('NODE_ENV is not set, assuming development');
+  // Set default behavior
+}
 
 
 

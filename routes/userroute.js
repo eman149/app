@@ -14,9 +14,11 @@ const {
   createUser,
   updateUser,
   deleteUser,
- // uploadUserImage,
- // resizeImage,
+ uploadUserImage,
+ resizeImage,
   changeUserPassword,
+  profilePhotoUploadCtrl ,
+  profilePhotoUpload,
 //   getLoggedUserData,
 //   updateLoggedUserPassword,
 //   updateLoggedUserData,
@@ -57,12 +59,15 @@ router.put(
   router
   .route('/')
   .get(getUsers)
-  .post(createUserValidator ,createUser);
+  .post(uploadUserImage, resizeImage, createUserValidator ,createUser);
+ // .post(profilePhotoUpload);
+
 router
   .route('/:id')
   .get( getUser)
-  .put( updateUserValidator ,updateUser)
+  .put(uploadUserImage, resizeImage, updateUserValidator ,updateUser)
+  //.put(profilePhotoUploadCtrl,updateUserValidator ,updateUser)
   .delete( deleteUserValidator,deleteUser);
-
+  //.post(profilePhotoUpload);
 
 module.exports = router;

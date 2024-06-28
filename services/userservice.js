@@ -5,30 +5,62 @@ const bcrypt = require('bcrypt');
 
 const factory = require('./handlersfactory');
 const apierror = require('../utils/apierror');
-//const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
-//const createToken = require('../utils/createToken');
+const { uploadSingleImage } = require('../middlewares/uploadImageMiddleware');
+const { v4: uuidv4 } = require('uuid');
+const sharp = require('sharp');
+const createToken = require('../utils/createToken');
 const User = require('../models/usermodel');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+
+const path = require ("path") ;
+const {cloudinaryUploadImage ,cloudinaryRemoveImage} = require ("../utils/cloudinary.js") ;
 
 // // Upload single image
-// exports.uploadUserImage = uploadSingleImage('profileImg');
+exports.uploadUserImage = uploadSingleImage('profileImg');
 
 // // Image processing
-// exports.resizeImage = asyncHandler(async (req, res, next) => {
-//   const filename = `user-${uuidv4()}-${Date.now()}.jpeg`;
+exports.resizeImage = asyncHandler(async (req, res, next) => {
 
-//   if (req.file) {
-//     await sharp(req.file.buffer)
-//       .resize(600, 600)
-//       .toFormat('jpeg')
-//       .jpeg({ quality: 95 })
-//       .toFile(`uploads/users/${filename}`);
+  const filename = `user-${uuidv4()}-${Date.now()}.jpeg`;
 
-//     // Save image into our db
-//     req.body.profileImg = filename;
+  if (req.file) {
+    await sharp(req.file.buffer)
+      .resize(600, 600)
+      .toFormat('jpeg')
+      .jpeg({ quality: 95 })
+      .toFile(`uploads/users/${filename}`);
+
+    // Save image into our db
+    req.body.profileImg = filename;
+  }
+
+  next();
+ });
+// // @route   post /api/v1/users
+// exports.profilePhotoUploadCtrl =asyncHandler (async (req , res) =>{
+//   //1 vaildation 
+//   if (!req.file) {
+//     return res.status(400).json({message: "no file provider"}) ;
 //   }
+  
+//  //const  uploadUserImage = uploadSingleImage('profileImg');
 
-//   next();
-// });
+  
+//   ////2// get the path to img 
+  
+//   const imagePath = path.join(__dirname , `../imgs/${req.file}`) ; 
+
+//   ////3//  upload to cloudinary 
+
+//   const result = await cloudinaryUploadImage(imagePath) ;
+//   console.log (result) ;
+
+//   //////4
+//   res.status(200).json({message: "success"}) ;
+  
+// })
+
 
 // @desc    Get list of users
 // @route   GET /api/v1/users
@@ -43,7 +75,19 @@ exports.getUser = factory.getone(User);
 // @desc    Create user
 // @route   POST  /api/v1/users
 // @access  Private/Admin
-exports.createUser = factory.createone(User);
+////////////exports.createUser = factory.createone(User);
+
+exports.createUser = asyncHandler(async (req ,res) => {
+  const user = await User.create(req.body) ;
+  ////res.status(201) .json({data : newdocument}) ; 
+
+  
+  // 2- Generate token
+  const token = createToken(user._id);
+
+  res.status(201).json({ data: user, token });
+
+ });
 
 // // @desc    Update specific user
 // // @route   PUT /api/v1/users/:id
@@ -93,6 +137,9 @@ exports.changeUserPassword = asyncHandler(async (req, res, next) => {
 // @route   DELETE /api/v1/users/:id
 // @access  Private/Admin
 exports.deleteUser = factory.deletone(User);
+
+
+
 
 // // @desc    Get Logged user data
 // // @route   GET /api/v1/users/getMe

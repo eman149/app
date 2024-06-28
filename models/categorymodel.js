@@ -13,7 +13,27 @@ const  categoryschema = new mongoose.Schema({
       type : String ,
       lowercase : true ,  
     },
-    image : String ,
+    icon : String ,
+    cals: {
+      type: Number,
+      trim: true,
+      required: [true, 'calories required'],
+    },
+    protein: {
+      type: Number,
+      trim: true,
+      required: [true, 'protein required'],
+    },
+    carb: {
+      type: Number,
+      trim: true,
+      required: [true, 'carb required'],
+    },
+    fat: {
+      type: Number,
+      trim: true,
+      required: [true, 'Fat required'],
+    },
   } , 
   {timestamps : true}
 ) ;

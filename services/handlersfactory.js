@@ -39,6 +39,7 @@ exports.createone = (model) =>
         const newdocument = await model.create(req.body) ;
         res.status(201) .json({data : newdocument}) ; 
       
+        
        });
 
 
@@ -60,10 +61,15 @@ exports.getall = (model)  =>
         // console.log(req.body) ;
         // const page =  res.query.page * 1 || 1 ;
         // const limit = req.query.limit *1 || 5 ;
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 5;
-        const skip = (page - 1 ) * limit ;
-        const documents = await model.find({}).skip(skip).limit(limit) ; 
-        res.status(200).json({results :documents.length , page ,  data: documents}) ;
+        // const page = parseInt(req.query.page) || 1;
+        // const limit = parseInt(req.query.limit) || 5;
+        // const skip = (page - 1 ) * limit ;
+        // const documents = await model.find({}).skip(skip).limit(limit) ; 
+        // res.status(200).json({results :documents.length , page ,  data: documents}) ;
+
+
+         const documents = await model.find({}) ; 
+         res.status(200).json({ data: documents}) ;
+
       } ) ;
           
