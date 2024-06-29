@@ -63,13 +63,14 @@ router.put(
   router
   .route('/')
   .get(getUsers)
-  .post(uploadUserImage, resizeImage, createUserValidator ,createUser ) ;
+  .post(uploadUserImage, resizeImage, createUserValidator ,createUser  , updateUser2) ;
  // .post(profilePhotoUpload);
  
 
 router
   .route('/:id')
   .get( getUser)
+  .post(updateUser2)
   .put(uploadUserImage, resizeImage, updateUserValidator ,updateUser ,updateUser2)
   //.put(profilePhotoUploadCtrl,updateUserValidator ,updateUser)
   .delete( deleteUserValidator,deleteUser);

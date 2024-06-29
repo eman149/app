@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema(
     phone: String,
     profileImg: String,
 
-    image : String ,
+    imageUrl: String ,
+    userId: String,
     
     gender: {
       type: String,

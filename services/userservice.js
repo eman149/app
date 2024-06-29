@@ -102,6 +102,10 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
       email: req.body.email,
       profileImg: req.body.profileImg,
       role: req.body.role,
+      weight: req.body.weight,
+      height: req.body.height,
+      old: req.body.old,
+      gender: req.body.gender,
     },
     {
       new: true,
@@ -124,7 +128,6 @@ exports.updateUser2 = asyncHandler(async (req, res, next) => {
     {
       weight: req.body.weight,
       height: req.body.height,
-
       old: req.body.old,
       gender: req.body.gender,
     },
