@@ -83,12 +83,16 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
+const uploadPhoto = require('./uploadPhoto.js')
+
+//app.use('uploadPhoto', uploadPhoto);
 
 //// mount  routes
 /// route to schema 
 app.use("/api/v1/categories" , categoryroutes) ;
 app.use("/api/v1/users" , userroute) ;
 app.use("/api/v1/auth" , authroute) ;
+app.use("/api/v1/uploadPhoto",  uploadPhoto) ;
 
 app.all('*' , (req , res , next ) =>{
   /// create err and send it to err handling middleware 

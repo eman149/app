@@ -26,22 +26,22 @@ const userSchema = new mongoose.Schema(
     gender: {
       type: String,
       trim: true,
-      required: [true, 'gender required'],
+    ///  required: [true, 'gender required'],
     },
     weight: {
       type: Number,
       trim: true,
-      required: [true, 'weight required'],
+     // required: [true, 'weight required'],
     },
     height: {
       type: Number,
       trim: true,
-      required: [true, 'height required'],
+      //required: [true, 'height required'],
     },
     old: {
       type: Number,
       trim: true,
-      required: [true, 'old required'],
+     // required: [true, 'old required'],
     },
     password: {
       type: String,

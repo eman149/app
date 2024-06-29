@@ -57,21 +57,10 @@ exports.createUserValidator = [
   check('profileImg').optional(),
   check('role').optional(),
 
-  check('height')
-    .notEmpty()
-    .withMessage(' required'),
-
- check('weight')
-    .notEmpty()
-    .withMessage(' required'),
-
-  check('gender')
-    .notEmpty()
-    .withMessage(' required'),
-
-  check('old')
-    .notEmpty()
-    .withMessage(' required'),
+  check('height').optional(),
+  check('weight').optional(),
+  check('gender').optional(),
+  check('old').optional(),
 
   validatorMiddleware,
 ];
@@ -115,6 +104,8 @@ exports.updateUserValidator = [
   check('height').optional(),
   check('weight').optional(),
   check('gender').optional(),
+  check('old').optional(),
+
   validatorMiddleware,
 ];
 

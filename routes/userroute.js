@@ -1,4 +1,7 @@
 const express = require('express');
+
+
+
 const {
   getUserValidator,
   createUserValidator,
@@ -19,6 +22,7 @@ const {
   changeUserPassword,
   profilePhotoUploadCtrl ,
   profilePhotoUpload,
+  updateUser2
 //   getLoggedUserData,
 //   updateLoggedUserPassword,
 //   updateLoggedUserData,
@@ -59,13 +63,14 @@ router.put(
   router
   .route('/')
   .get(getUsers)
-  .post(uploadUserImage, resizeImage, createUserValidator ,createUser);
+  .post(uploadUserImage, resizeImage, createUserValidator ,createUser ) ;
  // .post(profilePhotoUpload);
+ 
 
 router
   .route('/:id')
   .get( getUser)
-  .put(uploadUserImage, resizeImage, updateUserValidator ,updateUser)
+  .put(uploadUserImage, resizeImage, updateUserValidator ,updateUser ,updateUser2)
   //.put(profilePhotoUploadCtrl,updateUserValidator ,updateUser)
   .delete( deleteUserValidator,deleteUser);
   //.post(profilePhotoUpload);

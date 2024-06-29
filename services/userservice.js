@@ -14,7 +14,6 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const path = require ("path") ;
-const {cloudinaryUploadImage ,cloudinaryRemoveImage} = require ("../utils/cloudinary.js") ;
 
 // // Upload single image
 exports.uploadUserImage = uploadSingleImage('profileImg');
@@ -115,6 +114,30 @@ exports.updateUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ data: document });
 });
 
+// // @desc    Update 4 user
+// // @route   PUT /api/v1/users/:id
+// // @access  Private/Admin
+// //  ubdate 4
+exports.updateUser2 = asyncHandler(async (req, res, next) => {
+  const document = await User.findByIdAndUpdate(
+    req.params.id,
+    {
+      weight: req.body.weight,
+      height: req.body.height,
+
+      old: req.body.old,
+      gender: req.body.gender,
+    },
+    {
+      new: true,
+    }
+  );
+
+  if (!document) {
+    return next(new apierror(`No document for this id ${req.params.id}`, 404));
+  }
+  res.status(200).json({ data: document });
+});
 exports.changeUserPassword = asyncHandler(async (req, res, next) => {
   const document = await User.findByIdAndUpdate(
     req.params.id,
