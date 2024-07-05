@@ -16,37 +16,6 @@ const imageKitConfig = new imageKit({
 });
  
 
-//  exports.upload = asyncHandler( async (req, res) => {
-
-//   try {
-//       // Upload image to Cloudinary
-//       console.log(req.file) ;
-//       const image = await imageKitConfig.upload({
-//         file: req.file.buffer.toString('base64'),
-//         fileName: req.file.originalname,
-//         folder: '/upload'
-
-//     }) ;
-//       const document = await User.findById (
-//         req.params.id,{
-//           profileImg: req.body.image,
-//         }) ;
-      
-//       // Send the Cloudinary URL in the response
-//      // res.json({ imageUrl: image.url }) ;
-
-//       if (!document) {
-//         return next(new apierror(`No document for this id ${req.params.id}`, 404));
-//       }
-//       res.status(200).json({ imageUrl: image.url , data: document 
-//     }) ;
-//  } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error: 'Error uploading image ' });
-//     }
-
-// } ) ;
-
 // //   // Express route for image upload
 // router.post('/upload', upload.single('image'), async (req, res) => {
 //     try {

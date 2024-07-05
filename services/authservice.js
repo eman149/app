@@ -139,13 +139,15 @@ exports.allowedTo = (...roles) =>
         new apierror(`There is no user with that email ${req.body.email}`, 404)
       );
     }
+    console.log(user)
     // 2) If user exist, Generate hash reset random 6 digits and save it in db
     const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
     const hashedResetCode = crypto
       .createHash('sha256')
       .update(resetCode)
       .digest('hex');
-  
+     // console.log(resetCode)
+     // console.log(hashedResetCode)
     // Save hashed password reset code into db
     user.passwordResetCode = hashedResetCode;
     // Add expiration time for password reset code (10 min)
@@ -153,20 +155,26 @@ exports.allowedTo = (...roles) =>
     user.passwordResetVerified = false;
   
     await user.save();
-  
+    
     // 3) Send the reset code via email
-    const message = `Hi ${user.name},\n We received a request to reset the password on your E-shop Account. \n ${resetCode} \n Enter this code to complete the reset. \n Thanks for helping us keep your account secure.\n The E-shop Team`;
+    const message = `Hi ${user.name},\n We received a request to reset the password on your E-health Account. \n ${resetCode} \n Enter this code to complete the reset. \n Thanks for helping us keep your account secure.\n The E-health Team`;
+    
+    console.log(user.passwordResetCode) ;
     try {
       await sendEmail({
         email: user.email,
         subject: 'Your password reset code (valid for 10 min)',
         message,
       });
-    } catch (err) {
+      
+    }
+  
+    catch (err) {
       user.passwordResetCode = undefined;
       user.passwordResetExpires = undefined;
       user.passwordResetVerified = undefined;
-  
+      console.log(err)
+    
       await user.save();
       return next(new apierror('There is an error in sending email', 500));
     }

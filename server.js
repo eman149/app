@@ -10,8 +10,13 @@ const categoryroutes = require('./routes/categryroutes') ;
 const userroute  = require ('./routes/userroute.js') ;
 const authroute  = require ('./routes/authroute.js') ;
 
+const uploadPhoto = require('./uploadPhoto.js') ; 
+const forget = require('./forget.js') ;
+const User = require('./models/usermodel.js');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const bcrypt = require('bcryptjs');
 
- 
 
 // Connect with db
 dbConnection();
@@ -54,21 +59,6 @@ const searchFood = async (foodName) => {
 };
 
 
-// //////////  cloudphoto 
-// const cloudinary = require('./cloudinary.config.js');
-
-// const filePath = './uploads/users'; // Replace with the actual path
-
-// cloudinary.uploader.upload(filePath, (error, result) => {
-//   if (error) {
-//     console.error(error);
-//   } else {
-//     console.log('Image uploaded successfully:', result.url);
-//   }
-// });
-
-
-
 
 ////////.env
 if (process.env.NODE_ENV === 'development') {
@@ -81,9 +71,65 @@ if (process.env.NODE_ENV === 'development') {
   console.log('NODE_ENV is not set, assuming development');
   // Set default behavior
 }
+///////////////////////////////////////////////////////
 
+// const transporter = nodemailer.createTransport({
+//   host: 'smtp.your-email-provider.com', // Replace with your SMTP server address
+//   port: 587, // Or 465 for SSL/TLS
+//   secure: false, // Set to true for port 465 (SSL/TLS)
+//   auth: {
+//     user: 'emanabdou506@gmail.com', // Replace with your email address
+//     pass: 'emanlove2002' // Replace with your email password or App password
+//   }
+// });
 
-const uploadPhoto = require('./uploadPhoto.js')
+// ///////// forget
+// app.post('/forgot-password', async (req, res) => {
+//   const { email } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(400).send('Email not found');
+//     }
+
+//     // Generate a random password reset token
+//     const resetToken = crypto.randomBytes(20).toString('hex');
+//     const resetExpires = Date.now() + 3600000; // 1 hour from now
+
+//     user.passwordResetToken = resetToken;
+//     user.passwordResetExpires = resetExpires;
+//     await user.save();
+
+//     // Create a transport object for sending emails (replace with your email service details)
+//     const transporter = nodemailer.createTransport({
+//       // ... your email service configuration
+//     });
+
+//     // Send password reset email
+//     const resetUrl = `http://localhost:8000/reset-password/${resetToken}`; // Replace with your frontend URL
+//     const mailOptions = {
+//       from: '"Your App Name" <your-email@example.com>',
+//       to: email,
+//       subject: 'Password Reset',
+//       text: `You have requested a password reset for your account.\n\nClick on the following link to reset your password:\n${resetUrl}\n\nIf you did not request a password reset, please ignore this email.\n`
+//     };
+
+//     transporter.sendMail(mailOptions, (error, info) => {
+//       if (error) {
+//         console.error('Error sending email:', error);
+//         return res.status(500).send('Error sending email');
+//       }
+//       console.log('Email sent:', info.response);
+//       res.status(200).send('Password reset link sent to your email');
+//     });
+
+//   } catch (err) {
+//     console.error('Error processing forgot password request:', err);
+//     res.status(500).send('Error processing request');
+//   }
+// });
+
 
 //app.use('uploadPhoto', uploadPhoto);
 
@@ -93,6 +139,8 @@ app.use("/api/v1/categories" , categoryroutes) ;
 app.use("/api/v1/users" , userroute) ;
 app.use("/api/v1/auth" , authroute) ;
 app.use("/api/v1/uploadPhoto",  uploadPhoto) ;
+//app.use("/api/v1/forget", forget) ;
+
 
 app.all('*' , (req , res , next ) =>{
   /// create err and send it to err handling middleware 
